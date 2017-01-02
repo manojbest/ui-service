@@ -1,0 +1,177 @@
+<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div>
+
+<div ng-show="isVisibleMainForm">
+  <div class="jumbotron">
+    <p class="lead">
+      <img src="images/postcode.png" alt="I'm postcoder"><br>
+      Welcome to the PostCoder Web !!!!
+      We created this API to help you lookup and validate data faster than ever.
+    </p>
+  </div>
+
+  <div class="row marketing">
+    <div class="form-inline">
+      <ui-select ng-model="itemArray.selected" theme="select2" ng-disabled="disabled" style="min-width: 400px;">
+        <ui-select-match placeholder="Select a country">
+          <img ng-src="{{ $select.selected.url }}" />{{$select.selected.name}}
+        </ui-select-match>
+        <ui-select-choices repeat="item in itemArray">
+          <img ng-src="{{ item.url }}" />
+          <div ng-bind-html="item.name | highlight: $select.search" style="display: inline"></div>
+        </ui-select-choices>
+      </ui-select>
+      <a class="btn btn-default" ng-click="selectCountry()">Select</a>
+      <a class="btn btn-default" ng-click="resetCountry()">Reset</a>
+    </div>
+  </div>
+</div>
+
+
+<div ng-show="isVisibleIrishForm">
+  <uib-accordion close-others="true">
+    <div uib-accordion-group class="panel-default" heading="Irish address lookup" is-open="true">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-3" for="inputAddress"> Address / Eir Code:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputAddress" ng-model='address' placeholder="Enter Address Fragment / Eir Code">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-3">
+            <button type="submit" class="btn btn-default" ng-click="searchIrishAddress(address)">Search</button>
+            <button type="reset" class="btn btn-default" ng-click="reset()">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div uib-accordion-group class="panel-default" heading="Irish address and coordinate lookup">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-3" for="inputAddressCoordinate"> Address / Eir Code:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputAddressCoordinate" ng-model='address' placeholder="Enter Address Fragment / Eir Code">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-3">
+            <button type="submit" class="btn btn-default" ng-click="searchIrishGeoAddress(address)">Search</button>
+            <button type="reset" class="btn btn-default" ng-click="reset()">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div uib-accordion-group class="panel-default" heading="Coordinate lookup">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-3" for="inputEirCoordinate"> Eir Code:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputEirCoordinate"  ng-model='eircode' placeholder="Enter Eir Code">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-3">
+            <button type="submit" class="btn btn-default" ng-click="searchIrishCoordinate(eircode)">Search</button>
+            <button type="reset" class="btn btn-default" ng-click="reset()">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div uib-accordion-group class="panel-default" heading="Reverse geocode coordinates to an Irish address" >
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-3" for="latitude">Latitude:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="latitude" ng-model='latitude' placeholder="Enter Latitude">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-3" for="longitude">Longitude:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="longitude" ng-model='longitude' placeholder="Enter Longitude">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-3" for="distance">Distance:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="distance" ng-model='distance' placeholder="Enter Distance">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-3">
+            <button type="submit" class="btn btn-default" ng-click="searchIrishReverseAddress(latitude, longitude, distance)">Search</button>
+            <button type="reset" class="btn btn-default" ng-click="reset()">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </uib-accordion>
+</div>
+
+<div ng-show="isVisibleUKForm">
+  <uib-accordion close-others="true">
+    <div uib-accordion-group class="panel-default" heading="UK address lookup" is-open="true">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-3" for="ukInputAddress"> Address :</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="ukInputAddress" ng-model='address' placeholder="Enter Address Fragment">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-3">
+            <button type="submit" class="btn btn-default" ng-click="searchUKAddress(address)">Search</button>
+            <button type="reset" class="btn btn-default" ng-click="reset()">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div uib-accordion-group class="panel-default" heading="Street lookup">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-3" for="inputStreet"> Address :</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputStreet" ng-model='address' placeholder="Enter Address Fragment">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-3">
+            <button type="submit" class="btn btn-default" ng-click="searchUKStreet(address)">Search</button>
+            <button type="reset" class="btn btn-default" ng-click="reset()">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div uib-accordion-group class="panel-default" heading="Address validate">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-sm-3" for="inputAddressValidate"> Address :</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputAddressValidate" ng-model='address' placeholder="Enter Address Fragment">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-3 col-sm-3">
+            <button type="submit" class="btn btn-default" ng-click="validateUKAddress(address)">Search</button>
+            <button type="reset" class="btn btn-default">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </uib-accordion>
+</div>
+
+<div ng-if="isShowMask" >
+  <div>
+    <div id="mask">
+      <img src="images/loading.gif" class="mask-loader"/>
+    </div>
+  </div>
+</div>
+
+<div ng-if="isVisibleGrid" >
+
+  <div ui-grid="gridOptions" class="dataGrid" ui-grid-resize-columns></div>
+</div>
+
+
