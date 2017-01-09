@@ -14,7 +14,10 @@
     "angular-touch": "^1.4.0",
     "angular-ui-select": "^0.19.6",
     "angular-bootstrap": "^2.4.0",
-    "angular-ui-grid": "^4.0.2"
+    "angular-ui-grid": "^4.0.2",
+    "selectize": "^0.12.4",
+    "select2-css": "^3.5.1",
+    "ngSweetAlert": "angular-sweetalert#^1.1.2"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"

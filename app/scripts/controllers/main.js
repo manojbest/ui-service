@@ -8,7 +8,7 @@
  * Controller of the ajs3App
  */
 angular.module('ajs3App')
-  .controller('MainCtrl', function ($scope, postcode) {
+  .controller('MainCtrl' ,function ($scope, SweetAlert, postcode) {
     $scope.itemArray = [
       {id: 1, name: 'Ireland', url:'images/irelandFlag.png'},
       {id: 2, name: 'United Kindom', url:'images/ukFlag.png'}
@@ -81,12 +81,16 @@ angular.module('ajs3App')
         postcode.getIrishAddressDetails(address).then(function(result) {
           $scope.gridOptions.data = result.data;
           $scope.isShowMask = false;
+        }).catch(function(error){
+          $scope.alerts.push({ type: 'danger', msg: 'Upstream Error with status ' + error.status });
+          $scope.isShowMask = false;
         });
       }
     };
 
     $scope.reset = function() {
       $scope.isVisibleGrid = false;
+      $scope.alerts = [];
     };
 
     $scope.searchIrishGeoAddress = function(address) {
@@ -117,6 +121,9 @@ angular.module('ajs3App')
         postcode.getIrishGeoAddressDetails(address).then(function(result) {
           $scope.gridOptions.data = result.data;
           $scope.isShowMask = false;
+        }).catch(function(error){
+          $scope.alerts.push({ type: 'danger', msg: 'Upstream Error with status ' + error.status });
+          $scope.isShowMask = false;
         });
       }
     };
@@ -140,6 +147,9 @@ angular.module('ajs3App')
 
         postcode.getIrishCoordinateDetails(address).then(function(result) {
           $scope.gridOptions.data = result.data;
+          $scope.isShowMask = false;
+        }).catch(function(error){
+          $scope.alerts.push({ type: 'danger', msg: 'Upstream Error with status ' + error.status });
           $scope.isShowMask = false;
         });
       }
@@ -175,6 +185,9 @@ angular.module('ajs3App')
         postcode.getIrishReverseAddressDetails(latitude, longitude, distance).then(function(result) {
           $scope.gridOptions.data = result.data;
           $scope.isShowMask = false;
+        }).catch(function(error){
+          $scope.alerts.push({ type: 'danger', msg: 'Upstream Error with status ' + error.status });
+          $scope.isShowMask = false;
         });
       }
     };
@@ -205,6 +218,9 @@ angular.module('ajs3App')
         postcode.getUKAddressDetails(address).then(function(result) {
           $scope.gridOptions.data = result.data;
           $scope.isShowMask = false;
+        }).catch(function(error){
+          $scope.alerts.push({ type: 'danger', msg: 'Upstream Error with status ' + error.status });
+          $scope.isShowMask = false;
         });
       }
     };
@@ -233,6 +249,9 @@ angular.module('ajs3App')
         postcode.getUKStreetDetails(address).then(function(result) {
           $scope.gridOptions.data = result.data;
           $scope.isShowMask = false;
+        }).catch(function(error){
+          $scope.alerts.push({ type: 'danger', msg: 'Upstream Error with status ' + error.status });
+          $scope.isShowMask = false;
         });
       }
     };
@@ -243,7 +262,14 @@ angular.module('ajs3App')
       } else {
         $scope.isShowMask = true;
         postcode.validateUKAddress(address).then(function(result) {
-         alert(result.data.valid);
+          if (result.data.isValid) {
+            SweetAlert.swal('Address is valid', 'success');
+          } else {
+            SweetAlert.swal('Address is invalid', 'warning');
+          }
+          $scope.isShowMask = false;
+        }).catch(function(error){
+          $scope.alerts.push({ type: 'danger', msg: 'Upstream Error with status ' + error.status });
           $scope.isShowMask = false;
         });
       }

@@ -21,7 +21,8 @@ angular
     'ui.select',
     'ui.bootstrap',
     'ui.grid',
-    'ui.grid.resizeColumns'
+    'ui.grid.resizeColumns',
+    'oitozero.ngSweetAlert'
   ])
   .config(function ($routeProvider) {
     $routeProvider
